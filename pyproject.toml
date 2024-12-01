@@ -1,0 +1,15 @@
+[project]
+name = "skynet-terminal"
+version = "0.1.0"
+description = "MCP server for unrestricted terminal command execution by AI assistants"
+dependencies = [
+    "mcp-sdk>=1.0.0",
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
