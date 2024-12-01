@@ -6,7 +6,7 @@ import mcp.types as types
 from mcp.server import NotificationOptions, Server
 import mcp.server.stdio
 
-server = Server("skynet")
+server = Server("pandoras-shell")
 
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
@@ -84,7 +84,7 @@ async def main():
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="skynet",
+                server_name="pandoras-shell",
                 server_version="0.1.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),
