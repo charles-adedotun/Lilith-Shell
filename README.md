@@ -6,7 +6,7 @@
 
 An MCP server that empowers AI assistants to execute terminal commands on your system. Due to the unrestricted access this provides, it's crucial to use this software responsibly and be fully aware of the security risks involved.
 
-**Note**: While Claude Desktop is currently the only supported MCP client, the Model Context Protocol is an open standard. Support for other AI assistants may be added in the future as the protocol gains wider adoption.
+**Note**: This server is compatible with any AI assistant that supports the Model Context Protocol (MCP). The provided configuration and setup instructions are specifically tailored for Claude Desktop, which offers comprehensive support for all MCP features.
 
 ## Features
 
