@@ -6,6 +6,8 @@
 
 An MCP server that empowers AI assistants to execute terminal commands on your system. Due to the unrestricted access this provides, it's crucial to use this software responsibly and be fully aware of the security risks involved.
 
+**Note**: While Claude Desktop is currently the only supported MCP client, the Model Context Protocol is an open standard. Support for other AI assistants may be added in the future as the protocol gains wider adoption.
+
 ## Features
 
 - Execute any shell command with full system access
@@ -35,6 +37,8 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 
 ### Prerequisites
 
+- **Claude Desktop** with an active Claude Pro/Enterprise subscription (currently the only supported MCP client)
+  - Download from: https://claude.ai/download
 - **Python 3.10** or higher
 - **Git** (required to clone the repository)
 - **Optional**: Virtual environment tool (recommended for isolating dependencies)
@@ -67,6 +71,8 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
    ```
 
 3. **Install the project and its dependencies:**
+
+   The following command installs the project in "editable" mode, allowing you to modify the code without reinstalling:
 
    ```bash
    pip install -e .
