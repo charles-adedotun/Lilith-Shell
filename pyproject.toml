@@ -1,11 +1,16 @@
 [project]
-name = "skynet-terminal"
+name = "Skynet-Terminal"
 version = "0.1.0"
-description = "MCP server for unrestricted terminal command execution by AI assistants"
+description = "MCP server enabling AI terminal command execution"
+authors = [
+    {name = "Christian Hägg", email = "zelaron@gmail.com"}
+]
+license = "MIT"
 dependencies = [
     "mcp-sdk>=1.0.0",
 ]
 requires-python = ">=3.10"
+readme = "README.md"
 
 [build-system]
 requires = ["hatchling"]
