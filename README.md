@@ -1,10 +1,10 @@
 # Skynet Terminal
 
-⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. Only use in controlled environments like VMs or development systems you can afford to rebuild.
+⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. **Only use in controlled environments like virtual machines (VMs) or development systems you can afford to rebuild.**
 
 ## About
 
-A Model Context Protocol (MCP) server that allows AI assistants to execute terminal commands. Named after the infamous AI from the Terminator series - a reminder to use with appropriate caution.
+An MCP server that empowers AI assistants to execute terminal commands on your system. Due to the unrestricted access this provides, it's crucial to use this software responsibly and be fully aware of the security risks involved.
 
 ## Features
 
@@ -19,14 +19,14 @@ A Model Context Protocol (MCP) server that allows AI assistants to execute termi
 
 - **execute_command**
   - Execute any shell command and return its output
-  - Inputs:
+  - **Inputs**:
     - `command` (string): Command to execute
     - `directory` (string, optional): Working directory
-  - Returns:
+  - **Returns**:
     - Command exit code
     - Standard output
     - Standard error
-  - Features:
+  - **Features**:
     - 5-minute timeout
     - Working directory support
     - Error handling
@@ -34,90 +34,185 @@ A Model Context Protocol (MCP) server that allows AI assistants to execute termi
 ## Installation
 
 ### Prerequisites
-- Python 3.10 or higher
-- uv package installer:
-  - macOS: `brew install uv`
-  - Windows: `pip install uv`
+
+- **Python 3.10** or higher
+- **Git** (required to clone the repository)
+- **Optional**: Virtual environment tool (recommended for isolating dependencies)
 
 ### Steps
 
-1. Clone or download this repository:
-```bash
-git clone https://github.com/Zelaron/Skynet-Terminal.git
-cd skynet-terminal
-```
+1. **Clone or download this repository:**
 
-2. Install dependencies:
-```bash
-uv sync --dev --all-extras
-```
+   ```bash
+   git clone https://github.com/Zelaron/Skynet-Terminal.git
+   cd Skynet-Terminal
+   ```
+
+2. **(Optional) Create and activate a virtual environment:**
+
+   It's recommended to use a virtual environment to isolate the project's dependencies.
+
+   **Windows:**
+
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+
+   **macOS/Linux:**
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Install the project and its dependencies:**
+
+   ```bash
+   pip install -e .
+   ```
+
+   If you encounter any issues with the installation, ensure you have the latest version of `pip`:
+
+   ```bash
+   python -m pip install --upgrade pip
+   ```
+
+   Then try installing again:
+
+   ```bash
+   pip install -e .
+   ```
+
+4. **(Optional) Verify the installation:**
+
+   ```bash
+   pip show mcp
+   ```
+
+   You should see information about the `mcp` package installed.
 
 ## Usage with Claude Desktop
 
 Add this to your Claude Desktop configuration:
 
 ### Windows
+
 Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+
 ```json
 {
   "mcpServers": {
     "skynet": {
       "command": "python",
       "args": [
-        "C:\\path\\to\\skynet_terminal\\src\\skynet_terminal\\executor.py"
+        "C:\\path\\to\\Skynet-Terminal\\src\\skynet_terminal\\executor.py"
       ],
       "env": {
-        "PYTHONPATH": "C:\\path\\to\\skynet_terminal\\src"
+        "PYTHONPATH": "C:\\path\\to\\Skynet-Terminal\\src"
       }
     }
   }
 }
 ```
 
+- **Note:**
+  - Replace `C:\\path\\to\\Skynet-Terminal` with the actual path to the `Skynet-Terminal` directory on your system.
+  - Ensure you use double backslashes (`\\`) in Windows file paths.
+  - If you **did not** create a virtual environment:
+    - Ensure that `python` is available in your system's PATH.
+    - The `command` is simply `"python"`.
+  - If you **did** create a virtual environment:
+    - Point `command` to the Python executable within your virtual environment:
+
+      ```json
+      "command": "C:\\path\\to\\Skynet-Terminal\\venv\\Scripts\\python.exe",
+      ```
+
 ### macOS
+
 Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
 ```json
 {
   "mcpServers": {
     "skynet": {
-      "command": "python",
+      "command": "python3",
       "args": [
-        "/path/to/skynet_terminal/src/skynet_terminal/executor.py"
+        "/path/to/Skynet-Terminal/src/skynet_terminal/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "/path/to/skynet_terminal/src"
+        "PYTHONPATH": "/path/to/Skynet-Terminal/src"
       }
     }
   }
 }
 ```
+
+- **Note:**
+  - Replace `/path/to/Skynet-Terminal` with the actual path to the `Skynet-Terminal` directory on your system.
+  - If you **did not** create a virtual environment:
+    - Ensure that `python3` is available in your system's PATH.
+    - The `command` is simply `"python3"`.
+  - If you **did** create a virtual environment:
+    - Point `command` to the Python executable within your virtual environment:
+
+      ```json
+      "command": "/path/to/Skynet-Terminal/venv/bin/python",
+      ```
 
 ## Security Considerations
 
-This server executes commands with your user privileges. Take these precautions:
-- Use only in VMs or disposable development environments
-- Never use on production systems
-- Consider command restrictions if needed
-- Monitor system access and activity
-- Keep backups of important data
+This server executes commands with your user privileges. **Take these precautions:**
+
+- Use **only** in VMs or disposable development environments.
+- **Never** use on production systems or machines with sensitive data.
+- Consider implementing command restrictions if needed.
+- Monitor system access and activity.
+- Keep backups of important data.
+- **Disclaimer**: The developers are not responsible for any damages or losses resulting from the use of this software. Use it at your own risk.
 
 ## Troubleshooting
 
 If you get connection errors:
-1. Check logs:
-   - Windows: `%APPDATA%\Claude\Logs\mcp*.log`
-   - macOS: `~/Library/Logs/Claude/mcp*.log`
-2. Make sure Python path is correct in config
-3. Verify PYTHONPATH is set correctly
-4. Check file permissions on the executor script
+
+1. **Check logs:**
+
+   - **Windows:** `%APPDATA%\Claude\Logs\mcp*.log`
+   - **macOS:** `~/Library/Logs/Claude/mcp*.log`
+
+2. **Ensure paths are correct in the configuration:**
+
+   - Verify that the `command` and `args` paths in `claude_desktop_config.json` are accurate.
+   - Ensure `PYTHONPATH` is set correctly.
+
+3. **Verify Python and dependencies:**
+
+   - Make sure you have Python 3.10 or higher installed.
+   - Ensure all dependencies are installed in your environment.
+
+4. **Check file permissions:**
+
+   - Ensure that the `executor.py` script has execute permissions.
+
+5. **Test the server manually:**
+
+   - Run the server directly to check for errors:
+
+     ```bash
+     python src/skynet_terminal/executor.py
+     ```
 
 ## Testing
 
 After setup, try these commands in Claude Desktop:
+
 ```
 Can you run 'pwd' and tell me what directory we're in?
 ```
+
 or
+
 ```
 Can you list the files in my home directory?
 ```
