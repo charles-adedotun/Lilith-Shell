@@ -1,7 +1,7 @@
 [project]
-name = "Skynet-Terminal"
+name = "Pandoras-Shell"
 version = "0.1.0"
-description = "MCP server enabling AI terminal command execution"
+description = "MCP server enabling AI assistants to execute terminal commands through a secure shell interface"
 authors = [
     {name = "Christian Hägg", email = "zelaron@gmail.com"}
 ]

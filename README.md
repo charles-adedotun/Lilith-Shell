@@ -1,4 +1,4 @@
-# Skynet Terminal
+# Pandora's Shell
 
 ⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. **Only use in controlled environments like virtual machines (VMs) or development systems you can afford to rebuild.**
 
@@ -48,8 +48,8 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 1. **Clone or download this repository:**
 
    ```bash
-   git clone https://github.com/Zelaron/Skynet-Terminal.git
-   cd Skynet-Terminal
+   git clone https://github.com/Zelaron/Pandoras-Shell.git
+   cd Pandoras-Shell
    ```
 
 2. **(Optional) Create and activate a virtual environment:**
@@ -109,13 +109,13 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "skynet": {
+    "pandoras-shell": {
       "command": "python",
       "args": [
-        "C:\\path\\to\\Skynet-Terminal\\src\\skynet_terminal\\executor.py"
+        "C:\\path\\to\\Pandoras-Shell\\src\\pandoras_shell\\executor.py"
       ],
       "env": {
-        "PYTHONPATH": "C:\\path\\to\\Skynet-Terminal\\src"
+        "PYTHONPATH": "C:\\path\\to\\Pandoras-Shell\\src"
       }
     }
   }
@@ -123,7 +123,7 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
 ```
 
 - **Note:**
-  - Replace `C:\\path\\to\\Skynet-Terminal` with the actual path to the `Skynet-Terminal` directory on your system.
+  - Replace `C:\\path\\to\\Pandoras-Shell` with the actual path to the `Pandoras-Shell` directory on your system.
   - Ensure you use double backslashes (`\\`) in Windows file paths.
   - If you **did not** create a virtual environment:
     - Ensure that `python` is available in your system's PATH.
@@ -132,7 +132,7 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
     - Point `command` to the Python executable within your virtual environment:
 
       ```json
-      "command": "C:\\path\\to\\Skynet-Terminal\\venv\\Scripts\\python.exe",
+      "command": "C:\\path\\to\\Pandoras-Shell\\venv\\Scripts\\python.exe",
       ```
 
 ### macOS
@@ -142,13 +142,13 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "skynet": {
+    "pandoras-shell": {
       "command": "python3",
       "args": [
-        "/path/to/Skynet-Terminal/src/skynet_terminal/executor.py"
+        "/path/to/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "/path/to/Skynet-Terminal/src"
+        "PYTHONPATH": "/path/to/Pandoras-Shell/src"
       }
     }
   }
@@ -156,7 +156,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 ```
 
 - **Note:**
-  - Replace `/path/to/Skynet-Terminal` with the actual path to the `Skynet-Terminal` directory on your system.
+  - Replace `/path/to/Pandoras-Shell` with the actual path to the `Pandoras-Shell` directory on your system.
   - If you **did not** create a virtual environment:
     - Ensure that `python3` is available in your system's PATH.
     - The `command` is simply `"python3"`.
@@ -164,7 +164,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
     - Point `command` to the Python executable within your virtual environment:
 
       ```json
-      "command": "/path/to/Skynet-Terminal/venv/bin/python",
+      "command": "/path/to/Pandoras-Shell/venv/bin/python",
       ```
 
 ## Security Considerations
@@ -206,7 +206,7 @@ If you get connection errors:
    - Run the server directly to check for errors:
 
      ```bash
-     python src/skynet_terminal/executor.py
+     python src/pandoras_shell/executor.py
      ```
 
 ## Testing
