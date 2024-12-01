@@ -43,7 +43,7 @@ A Model Context Protocol (MCP) server that allows AI assistants to execute termi
 
 1. Clone or download this repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Zelaron/Skynet-Terminal.git
 cd skynet-terminal
 ```
 
