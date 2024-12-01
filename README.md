@@ -214,5 +214,5 @@ Can you run 'pwd' and tell me what directory we're in?
 or
 
 ```
-Can you list the files in my home directory?
+Can you list the files in my home directory? Which of them are larger than 200 MB?
 ```
