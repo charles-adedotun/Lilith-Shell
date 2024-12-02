@@ -37,74 +37,71 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 
 ### Prerequisites
 
-- **Claude Desktop** with an active Claude Pro/Enterprise subscription (currently the only supported MCP client)
-  - Download from: https://claude.ai/download
+- **Claude Desktop** with an active Claude Pro/Enterprise subscription
+  - Download from: [Claude AI](https://claude.ai/download)
 - **Python 3.10** or higher
-- **Git** (required to clone the repository)
-- **Optional**: Virtual environment tool (recommended for isolating dependencies)
+- **Git**
+- **uv** (required for package management)
 
-### Steps
+### Windows Installation
 
-1. **Clone or download this repository:**
-
-   ```bash
-   git clone https://github.com/Zelaron/Pandoras-Shell.git
-   cd Pandoras-Shell
+1. Install Prerequisites:
+   ```powershell
+   # Using winget:
+   winget install python git
    ```
 
-2. **(Optional) Create and activate a virtual environment:**
+2. Install uv (run PowerShell as administrator):
+   ```powershell
+   irm https://astral.sh/uv/install.ps1 | iex
+   [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$HOME\.local\bin", "User")
+   ```
 
-   It's recommended to use a virtual environment to isolate the project's dependencies.
-
-   **Windows:**
-
-   ```bash
+3. Clone and set up the project:
+   ```cmd
+   git clone https://github.com/Zelaron/Pandoras-Shell.git
+   cd Pandoras-Shell
    python -m venv venv
    venv\Scripts\activate
    ```
 
-   **macOS/Linux:**
+4. Install dependencies:
+   ```cmd
+   uv pip install mcp
+   pip install -e .
+   ```
 
+### macOS Installation
+
+1. Install Prerequisites:
    ```bash
-   python3 -m venv venv
+   brew install python git uv
+   ```
+
+2. Clone and set up the project:
+   ```bash
+   git clone https://github.com/Zelaron/Pandoras-Shell.git
+   cd Pandoras-Shell
+   python -m venv venv
    source venv/bin/activate
    ```
 
-3. **Install the project and its dependencies:**
-
-   The following command installs the project in "editable" mode, allowing you to modify the code without reinstalling:
-
+3. Install dependencies:
    ```bash
+   uv pip install mcp
    pip install -e .
    ```
 
-   If you encounter any issues with the installation, ensure you have the latest version of `pip`:
-
-   ```bash
-   python -m pip install --upgrade pip
-   ```
-
-   Then try installing again:
-
-   ```bash
-   pip install -e .
-   ```
-
-4. **(Optional) Verify the installation:**
-
-   ```bash
-   pip show mcp
-   ```
-
-   You should see information about the `mcp` package installed.
-
-## Usage with Claude Desktop
-
-Add this to your Claude Desktop configuration:
+## Configuration
 
 ### Windows
 
-Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+Locate the correct configuration directory - try these paths in order:
+
+1. `%APPDATA%\Claude\` (typically `C:\Users\[YourUsername]\AppData\Roaming\Claude\`)
+2. `%LOCALAPPDATA%\AnthropicClaude\` (typically `C:\Users\[YourUsername]\AppData\Local\AnthropicClaude\`)
+
+Create or edit `claude_desktop_config.json` in the correct directory:
 
 ```json
 {
@@ -112,60 +109,56 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
     "pandoras-shell": {
       "command": "python",
       "args": [
-        "C:\\path\\to\\Pandoras-Shell\\src\\pandoras_shell\\executor.py"
+        "C:/Users/[YourUsername]/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "C:\\path\\to\\Pandoras-Shell\\src"
+        "PYTHONPATH": "C:/Users/[YourUsername]/Pandoras-Shell/src"
       }
     }
   }
 }
 ```
 
-- **Note:**
-  - Replace `C:\\path\\to\\Pandoras-Shell` with the actual path to the `Pandoras-Shell` directory on your system.
-  - Ensure you use double backslashes (`\\`) in Windows file paths.
-  - If you **did not** create a virtual environment:
-    - Ensure that `python` is available in your system's PATH.
-    - The `command` is simply `"python"`.
-  - If you **did** create a virtual environment:
-    - Point `command` to the Python executable within your virtual environment:
+#### Important Notes for Windows:
 
-      ```json
-      "command": "C:\\path\\to\\Pandoras-Shell\\venv\\Scripts\\python.exe",
-      ```
+- Use forward slashes (`/`) in paths, not backslashes (`\`)
+- Replace `[YourUsername]` with your actual Windows username
+- File must be named exactly `claude_desktop_config.json`
+- If both possible config locations exist, try each until successful
 
 ### macOS
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "pandoras-shell": {
-      "command": "python3",
+      "command": "python",
       "args": [
-        "/path/to/Pandoras-Shell/src/pandoras_shell/executor.py"
+        "/Users/[YourUsername]/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "/path/to/Pandoras-Shell/src"
+        "PYTHONPATH": "/Users/[YourUsername]/Pandoras-Shell/src"
       }
     }
   }
 }
 ```
 
-- **Note:**
-  - Replace `/path/to/Pandoras-Shell` with the actual path to the `Pandoras-Shell` directory on your system.
-  - If you **did not** create a virtual environment:
-    - Ensure that `python3` is available in your system's PATH.
-    - The `command` is simply `"python3"`.
-  - If you **did** create a virtual environment:
-    - Point `command` to the Python executable within your virtual environment:
+#### Important Notes for macOS:
 
-      ```json
-      "command": "/path/to/Pandoras-Shell/venv/bin/python",
-      ```
+- Replace `[YourUsername]` with your actual username
+- You can use `$HOME` instead of `/Users/[YourUsername]` if preferred
+- File must be named exactly `claude_desktop_config.json`
+
+### After Configuration
+
+1. Restart Claude Desktop completely (quit/exit, not just close the window).
+2. Click the 🔌 icon to verify the server appears in the "Installed MCP Servers" list.
+3. If the server doesn't appear, check Claude's logs:
+   - **Windows**: `%APPDATA%\Claude\Logs\mcp*.log` or `%LOCALAPPDATA%\AnthropicClaude\Logs\mcp*.log`
+   - **macOS**: `~/Library/Logs/Claude/mcp*.log`
 
 ## Security Considerations
 
@@ -176,49 +169,48 @@ This server executes commands with your user privileges. **Take these precaution
 - Consider implementing command restrictions if needed.
 - Monitor system access and activity.
 - Keep backups of important data.
-- **Disclaimer**: The developers are not responsible for any damages or losses resulting from the use of this software. Use it at your own risk.
+
+**Disclaimer**: The developers are not responsible for any damages or losses resulting from the use of this software. Use it at your own risk.
 
 ## Troubleshooting
 
-If you get connection errors:
+If you encounter issues:
 
 1. **Check logs:**
+   - **Windows**: `%APPDATA%\Claude\Logs\mcp*.log` or `%LOCALAPPDATA%\AnthropicClaude\Logs\mcp*.log`
+   - **macOS**: `~/Library/Logs/Claude/mcp*.log`
 
-   - **Windows:** `%APPDATA%\Claude\Logs\mcp*.log`
-   - **macOS:** `~/Library/Logs/Claude/mcp*.log`
+2. **Verify installation:**
+   - Ensure `uv` is properly installed and in your PATH.
+   - Check that `mcp` package is installed: `pip show mcp`.
+   - Verify Python version is 3.10 or higher.
 
-2. **Ensure paths are correct in the configuration:**
+3. **Configuration issues:**
+   - Double-check all paths in `claude_desktop_config.json`.
+   - Verify JSON syntax is valid.
+   - Ensure proper path separators for your OS.
+   - Confirm config file is in the correct location.
 
-   - Verify that the `command` and `args` paths in `claude_desktop_config.json` are accurate.
-   - Ensure `PYTHONPATH` is set correctly.
+4. **Environment issues:**
+   - Make sure `virtualenv` is activated if using one.
+   - Verify `PYTHONPATH` is set correctly.
+   - Check file permissions.
 
-3. **Verify Python and dependencies:**
-
-   - Make sure you have Python 3.10 or higher installed.
-   - Ensure all dependencies are installed in your environment.
-
-4. **Check file permissions:**
-
-   - Ensure that the `executor.py` script has execute permissions.
-
-5. **Test the server manually:**
-
-   - Run the server directly to check for errors:
-
-     ```bash
-     python src/pandoras_shell/executor.py
-     ```
+5. **Test server manually:**
+   ```bash
+   python src/pandoras_shell/executor.py
+   ```
 
 ## Testing
 
 After setup, try these commands in Claude Desktop:
 
-```
+```text
 Can you run 'pwd' and tell me what directory we're in?
 ```
 
 or
 
-```
+```text
 Can you list the files in my home directory? Which of them are larger than 200 MB?
 ```
