@@ -109,10 +109,10 @@ Create or edit `claude_desktop_config.json` in the correct directory:
     "pandoras-shell": {
       "command": "python",
       "args": [
-        "C:/Users/[YourUsername]/Pandoras-Shell/src/pandoras_shell/executor.py"
+        "C:/path/to/cloned/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "C:/Users/[YourUsername]/Pandoras-Shell/src"
+        "PYTHONPATH": "C:/path/to/cloned/Pandoras-Shell/src"
       }
     }
   }
@@ -136,10 +136,10 @@ Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`
     "pandoras-shell": {
       "command": "python",
       "args": [
-        "/Users/[YourUsername]/Pandoras-Shell/src/pandoras_shell/executor.py"
+        "/path/to/cloned/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "/Users/[YourUsername]/Pandoras-Shell/src"
+        "PYTHONPATH": "/path/to/cloned/Pandoras-Shell/src"
       }
     }
   }
