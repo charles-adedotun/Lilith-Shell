@@ -61,7 +61,7 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
    ```cmd
    git clone https://github.com/Zelaron/Pandoras-Shell.git
    cd Pandoras-Shell
-   python -m venv venv
+   python3 -m venv venv
    venv\Scripts\activate
    ```
 
@@ -82,7 +82,7 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
    ```bash
    git clone https://github.com/Zelaron/Pandoras-Shell.git
    cd Pandoras-Shell
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate
    ```
 
@@ -107,7 +107,7 @@ Create or edit `claude_desktop_config.json` in the correct directory:
 {
   "mcpServers": {
     "pandoras-shell": {
-      "command": "python",
+      "command": "C:/path/to/cloned/Pandoras-Shell/venv/Scripts/python.exe",
       "args": [
         "C:/path/to/cloned/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
@@ -134,7 +134,7 @@ Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`
 {
   "mcpServers": {
     "pandoras-shell": {
-      "command": "python",
+      "command": "/path/to/cloned/Pandoras-Shell/venv/bin/python",
       "args": [
         "/path/to/cloned/Pandoras-Shell/src/pandoras_shell/executor.py"
       ],
@@ -151,6 +151,7 @@ Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Replace `[YourUsername]` with your actual username
 - You can use `$HOME` instead of `/Users/[YourUsername]` if preferred
 - File must be named exactly `claude_desktop_config.json`
+- The `command` path should point to the Python interpreter inside your virtual environment (`venv/bin/python`), not the system Python
 
 ### After Configuration
 
@@ -198,8 +199,17 @@ If you encounter issues:
 
 5. **Test server manually:**
    ```bash
-   python src/pandoras_shell/executor.py
+   # For macOS:
+   ./venv/bin/python src/pandoras_shell/executor.py
+   
+   # For Windows:
+   .\venv\Scripts\python.exe src\pandoras_shell\executor.py
    ```
+
+6. **Connection issues:**
+   - If you get "Could not connect to MCP server" errors, ensure you're using the virtual environment's Python interpreter in your config file.
+   - For macOS: Use `/path/to/cloned/Pandoras-Shell/venv/bin/python`
+   - For Windows: Use `C:/path/to/cloned/Pandoras-Shell/venv/Scripts/python.exe`
 
 ## Testing
 
