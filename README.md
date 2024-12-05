@@ -199,11 +199,18 @@ If you encounter issues:
 
 5. **Test server manually:**
    ```bash
+   # First, make sure you're in the Pandoras-Shell directory:
+   cd /path/to/cloned/Pandoras-Shell
+   
    # For macOS:
    ./venv/bin/python src/pandoras_shell/executor.py
    
    # For Windows:
    .\venv\Scripts\python.exe src\pandoras_shell\executor.py
+
+   # The executor will appear to hang with no output - this is normal.
+   # It's waiting for connections from Claude Desktop.
+   # Use Ctrl+C to stop it.
    ```
 
 6. **Connection issues:**
