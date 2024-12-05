@@ -43,25 +43,46 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 - **Git**
 - **uv** (required for package management)
 
-### Windows Installation
+# Windows Installation
 
 1. Install Prerequisites:
+   
+   **Option A** - Using winget (if available on your system):
    ```powershell
-   # Using winget:
    winget install python git
    ```
 
-2. Install uv (run PowerShell as administrator):
+   **Option B** - Manual installation (recommended):
+   - Download and install Python from [python.org](https://www.python.org)
+   - Download and install Git from [git-scm.com](https://git-scm.com)
+
+2. Install uv:
+
+   Open Command Prompt (`cmd.exe`) as administrator and run:
    ```powershell
-   irm https://astral.sh/uv/install.ps1 | iex
-   [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$HOME\.local\bin", "User")
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
+
+   If you encounter any issues, you may need to restart your terminal or computer for the changes to take effect.
 
 3. Clone and set up the project:
    ```cmd
    git clone https://github.com/Zelaron/Pandoras-Shell.git
    cd Pandoras-Shell
+   ```
+
+   Then create a virtual environment. Try these commands in order until one works:
+   ```cmd
+   python -m venv venv
+   ```
+
+   If that doesn't work, try:
+   ```cmd
    python3 -m venv venv
+   ```
+
+   Then activate the environment:
+   ```cmd
    venv\Scripts\activate
    ```
 
@@ -70,6 +91,8 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
    uv pip install mcp
    pip install -e .
    ```
+
+**Note**: If you installed Python from [python.org](https://www.python.org), you'll typically use `python`. If you installed via winget or from the Microsoft Store, you might need to use `python3`. Try both commands if one doesn't work.
 
 ### macOS Installation
 
