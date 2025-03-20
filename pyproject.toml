@@ -1,9 +1,9 @@
 [project]
-name = "Pandoras-Shell"
+name = "Lilith-Shell"
 version = "0.1.0"
-description = "MCP server enabling AI assistants to execute terminal commands through a secure shell interface"
+description = "Enhanced MCP server enabling AI assistants to execute terminal commands through a secure shell interface"
 authors = [
-    {name = "Christian Hägg", email = "zelaron@gmail.com"}
+    {name = "Charles Adedotun", email = "charles@adedot.un"}
 ]
 license = "MIT"
 dependencies = [

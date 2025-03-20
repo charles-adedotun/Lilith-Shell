@@ -1,26 +1,29 @@
-# Pandora's Shell
+# Lilith Shell
 
 ⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. **Only use in controlled environments like virtual machines (VMs) or development systems you can afford to rebuild.**
 
 ## About
 
-An MCP server that empowers AI assistants to execute terminal commands on your system. Due to the unrestricted access this provides, it's crucial to use this software responsibly and be fully aware of the security risks involved.
+Lilith Shell is an enhanced MCP server that empowers AI assistants to execute terminal commands on your system with improved security controls and testing. Due to the unrestricted access this provides, it's crucial to use this software responsibly and be fully aware of the security risks involved.
 
 **Note**: This server is compatible with any AI assistant that supports the Model Context Protocol (MCP). The provided configuration and setup instructions are specifically tailored for Claude Desktop, which offers comprehensive support for all MCP features.
 
 ## Features
 
-- Execute any shell command with full system access
+- Execute shell commands with security validation
 - Capture command output (stdout/stderr)
 - Set working directory
 - Handle command timeouts
+- Improved test coverage
+- Enhanced security controls
+- FastMCP integration
 
 ## API
 
 ### Tools
 
 - **execute_command**
-  - Execute any shell command and return its output
+  - Execute shell commands and return their output
   - **Inputs**:
     - `command` (string): Command to execute
     - `directory` (string, optional): Working directory
@@ -32,6 +35,7 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
     - 5-minute timeout
     - Working directory support
     - Error handling
+    - Security validation
 
 ## Installation
 
@@ -67,8 +71,8 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 
 3. Clone and set up the project:
    ```cmd
-   git clone https://github.com/Zelaron/Pandoras-Shell.git
-   cd Pandoras-Shell
+   git clone https://github.com/charles-adedotun/Lilith-Shell.git
+   cd Lilith-Shell
    ```
 
    Then create a virtual environment. Try these commands in order until one works:
@@ -88,8 +92,7 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 
 4. Install dependencies:
    ```cmd
-   uv pip install mcp
-   pip install -e .
+   uv pip install -e ".[dev]"
    ```
 
 **Note**: If you installed Python from [python.org](https://www.python.org), you'll typically use `python`. If you installed via winget or from the Microsoft Store, you might need to use `python3`. Try both commands if one doesn't work.
@@ -103,16 +106,15 @@ An MCP server that empowers AI assistants to execute terminal commands on your s
 
 2. Clone and set up the project:
    ```bash
-   git clone https://github.com/Zelaron/Pandoras-Shell.git
-   cd Pandoras-Shell
+   git clone https://github.com/charles-adedotun/Lilith-Shell.git
+   cd Lilith-Shell
    python3 -m venv venv
    source venv/bin/activate
    ```
 
 3. Install dependencies:
    ```bash
-   uv pip install mcp
-   pip install -e .
+   uv pip install -e ".[dev]"
    ```
 
 ## Configuration
@@ -129,13 +131,13 @@ Create or edit `claude_desktop_config.json` in the correct directory:
 ```json
 {
   "mcpServers": {
-    "pandoras-shell": {
-      "command": "C:/path/to/cloned/Pandoras-Shell/venv/Scripts/python.exe",
+    "lilith-shell": {
+      "command": "C:/path/to/cloned/Lilith-Shell/venv/Scripts/python.exe",
       "args": [
-        "C:/path/to/cloned/Pandoras-Shell/src/pandoras_shell/executor.py"
+        "C:/path/to/cloned/Lilith-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "C:/path/to/cloned/Pandoras-Shell/src"
+        "PYTHONPATH": "C:/path/to/cloned/Lilith-Shell/src"
       }
     }
   }
@@ -156,13 +158,13 @@ Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`
 ```json
 {
   "mcpServers": {
-    "pandoras-shell": {
-      "command": "/path/to/cloned/Pandoras-Shell/venv/bin/python",
+    "lilith-shell": {
+      "command": "/path/to/cloned/Lilith-Shell/venv/bin/python",
       "args": [
-        "/path/to/cloned/Pandoras-Shell/src/pandoras_shell/executor.py"
+        "/path/to/cloned/Lilith-Shell/src/pandoras_shell/executor.py"
       ],
       "env": {
-        "PYTHONPATH": "/path/to/cloned/Pandoras-Shell/src"
+        "PYTHONPATH": "/path/to/cloned/Lilith-Shell/src"
       }
     }
   }
@@ -222,8 +224,8 @@ If you encounter issues:
 
 5. **Test server manually:**
    ```bash
-   # First, make sure you're in the Pandoras-Shell directory:
-   cd /path/to/cloned/Pandoras-Shell
+   # First, make sure you're in the Lilith-Shell directory:
+   cd /path/to/cloned/Lilith-Shell
    
    # For macOS:
    ./venv/bin/python src/pandoras_shell/executor.py
@@ -238,8 +240,8 @@ If you encounter issues:
 
 6. **Connection issues:**
    - If you get "Could not connect to MCP server" errors, ensure you're using the virtual environment's Python interpreter in your config file.
-   - For macOS: Use `/path/to/cloned/Pandoras-Shell/venv/bin/python`
-   - For Windows: Use `C:/path/to/cloned/Pandoras-Shell/venv/Scripts/python.exe`
+   - For macOS: Use `/path/to/cloned/Lilith-Shell/venv/bin/python`
+   - For Windows: Use `C:/path/to/cloned/Lilith-Shell/venv/Scripts/python.exe`
 
 ## Testing
 
@@ -254,3 +256,7 @@ or
 ```text
 Can you list the files in my home directory? Which of them are larger than 200 MB?
 ```
+
+## Acknowledgments
+
+This project is a fork of [Pandoras-Shell](https://github.com/Zelaron/Pandoras-Shell) by Christian Hägg, with significant enhancements to security, testing, and functionality. The original project provided the foundation and inspiration for Lilith Shell.
