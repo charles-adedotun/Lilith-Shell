@@ -1,3 +1,4 @@
+"""Command execution module for Pandoras-Shell."""
 import os
 import subprocess
 import asyncio
@@ -50,7 +51,7 @@ async def handle_call_tool(
     try:
         # Run command and capture output
         result = subprocess.run(
-            command,
+            command=command,
             shell=True,
             cwd=directory,
             capture_output=True,
@@ -77,6 +78,8 @@ async def handle_call_tool(
             text=f"Error executing command: {str(e)}"
         )]
 
+# This main function is only used when executor.py is run directly,
+# not when imported by server.py
 async def main():
     # Run the server using stdin/stdout streams
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
