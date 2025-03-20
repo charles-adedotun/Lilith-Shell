@@ -1,4 +1,4 @@
-"""Server module for Pandoras-Shell."""
+"""Server module for Lilith-Shell."""
 import os
 import asyncio
 from mcp.server.models import InitializationOptions
@@ -6,10 +6,10 @@ import mcp.types as types
 from mcp.server import NotificationOptions, Server
 import mcp.server.stdio
 
-from pandoras_shell.executor import handle_call_tool, handle_list_tools
+from lilith_shell.executor import handle_call_tool, handle_list_tools
 
 # Re-export the server instance and handlers from executor.py
-from pandoras_shell.executor import server
+from lilith_shell.executor import server
 
 async def main():
     """Run the MCP server with stdio transport."""
@@ -19,7 +19,7 @@ async def main():
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="pandoras-shell",
+                server_name="lilith-shell",
                 server_version="0.1.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),

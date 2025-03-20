@@ -1,4 +1,4 @@
-"""Command execution module for Pandoras-Shell."""
+"""Command execution module for Lilith-Shell."""
 import os
 import subprocess
 import asyncio
@@ -7,7 +7,7 @@ import mcp.types as types
 from mcp.server import NotificationOptions, Server
 import mcp.server.stdio
 
-server = Server("pandoras-shell")
+server = Server("lilith-shell")
 
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
@@ -87,7 +87,7 @@ async def main():
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="pandoras-shell",
+                server_name="lilith-shell",
                 server_version="0.1.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),

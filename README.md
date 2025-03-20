@@ -134,7 +134,7 @@ Create or edit `claude_desktop_config.json` in the correct directory:
     "lilith-shell": {
       "command": "C:/path/to/cloned/Lilith-Shell/venv/Scripts/python.exe",
       "args": [
-        "C:/path/to/cloned/Lilith-Shell/src/pandoras_shell/executor.py"
+        "C:/path/to/cloned/Lilith-Shell/src/lilith_shell/executor.py"
       ],
       "env": {
         "PYTHONPATH": "C:/path/to/cloned/Lilith-Shell/src"
@@ -161,7 +161,7 @@ Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`
     "lilith-shell": {
       "command": "/path/to/cloned/Lilith-Shell/venv/bin/python",
       "args": [
-        "/path/to/cloned/Lilith-Shell/src/pandoras_shell/executor.py"
+        "/path/to/cloned/Lilith-Shell/src/lilith_shell/executor.py"
       ],
       "env": {
         "PYTHONPATH": "/path/to/cloned/Lilith-Shell/src"
@@ -228,10 +228,10 @@ If you encounter issues:
    cd /path/to/cloned/Lilith-Shell
    
    # For macOS:
-   ./venv/bin/python src/pandoras_shell/executor.py
+   ./venv/bin/python src/lilith_shell/executor.py
    
    # For Windows:
-   .\venv\Scripts\python.exe src\pandoras_shell\executor.py
+   .\venv\Scripts\python.exe src\lilith_shell\executor.py
 
    # The executor will appear to hang with no output - this is normal.
    # It's waiting for connections from Claude Desktop.
