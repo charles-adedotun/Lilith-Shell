@@ -2,6 +2,8 @@
 import os
 import subprocess
 import asyncio
+from typing import Dict, List, Optional, Union, Any
+
 from mcp.server.models import InitializationOptions
 import mcp.types as types
 from mcp.server import NotificationOptions, Server
@@ -9,8 +11,9 @@ import mcp.server.stdio
 
 server = Server("lilith-shell")
 
+
 @server.list_tools()
-async def handle_list_tools() -> list[types.Tool]:
+async def handle_list_tools() -> List[types.Tool]:
     """List available terminal command tools."""
     return [
         types.Tool(
@@ -19,25 +22,23 @@ async def handle_list_tools() -> list[types.Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "command": {
-                        "type": "string",
-                        "description": "Command to execute"
-                    },
+                    "command": {"type": "string", "description": "Command to execute"},
                     "directory": {
                         "type": "string",
                         "description": "Working directory (optional)",
-                        "default": "~"
-                    }
+                        "default": "~",
+                    },
                 },
-                "required": ["command"]
-            }
+                "required": ["command"],
+            },
         )
     ]
 
+
 @server.call_tool()
 async def handle_call_tool(
-    name: str, arguments: dict | None
-) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+    name: str, arguments: Optional[Dict[str, Any]]
+) -> List[Union[types.TextContent, types.ImageContent, types.EmbeddedResource]]:
     """Handle tool execution requests."""
     if name != "execute_command":
         raise ValueError(f"Unknown tool: {name}")
@@ -56,9 +57,9 @@ async def handle_call_tool(
             cwd=directory,
             capture_output=True,
             text=True,
-            timeout=300  # 5 minute timeout
+            timeout=300,  # 5 minute timeout
         )
-        
+
         output = f"Exit code: {result.returncode}\n\n"
         if result.stdout:
             output += f"STDOUT:\n{result.stdout}\n"
@@ -66,21 +67,21 @@ async def handle_call_tool(
             output += f"STDERR:\n{result.stderr}\n"
 
         return [types.TextContent(type="text", text=output)]
-    
+
     except subprocess.TimeoutExpired:
-        return [types.TextContent(
-            type="text",
-            text="Command timed out after 5 minutes"
-        )]
+        return [
+            types.TextContent(type="text", text="Command timed out after 5 minutes")
+        ]
     except Exception as e:
-        return [types.TextContent(
-            type="text",
-            text=f"Error executing command: {str(e)}"
-        )]
+        return [
+            types.TextContent(type="text", text=f"Error executing command: {str(e)}")
+        ]
+
 
 # This main function is only used when executor.py is run directly,
 # not when imported by server.py
-async def main():
+async def main() -> None:
+    """Run the MCP server with stdio transport."""
     # Run the server using stdin/stdout streams
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
@@ -95,6 +96,7 @@ async def main():
                 ),
             ),
         )
+
 
 if __name__ == "__main__":
     asyncio.run(main())

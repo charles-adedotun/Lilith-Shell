@@ -1,17 +1,16 @@
 """Server module for Lilith-Shell."""
-import os
 import asyncio
+
 from mcp.server.models import InitializationOptions
-import mcp.types as types
-from mcp.server import NotificationOptions, Server
+from mcp.server import NotificationOptions
 import mcp.server.stdio
 
-from lilith_shell.executor import handle_call_tool, handle_list_tools
 
 # Re-export the server instance and handlers from executor.py
 from lilith_shell.executor import server
 
-async def main():
+
+async def main() -> None:
     """Run the MCP server with stdio transport."""
     # Run the server using stdin/stdout streams
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
@@ -27,6 +26,7 @@ async def main():
                 ),
             ),
         )
+
 
 if __name__ == "__main__":
     asyncio.run(main())
