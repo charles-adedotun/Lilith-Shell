@@ -9,7 +9,8 @@ import mcp.types as types
 from mcp.server import NotificationOptions, Server
 import mcp.server.stdio
 
-server = Server("lilith-shell")
+# Add type annotation for server
+server: Server = Server("lilith-shell")
 
 
 @server.list_tools()
