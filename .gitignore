@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
+*.pyc
 
 # Distribution / packaging
 build/
@@ -37,16 +38,21 @@ htmlcov/
 .tox/
 coverage.xml
 *.cover
+.hypothesis/
+.nox/
+__pycache__/
 
 # Logs
 *.log
 logs/
 pandoras_shell.log
+lilith_shell.log
 
 # Documentation
 docs/_build/
 docs/build/
 docs/source/_autosummary/
+.doctrees/
 
 # IDE specific files
 .idea/
@@ -56,15 +62,26 @@ docs/source/_autosummary/
 .DS_Store
 *.sublime-project
 *.sublime-workspace
+*.iml
+.spyderproject
+.spyproject
+.ropeproject
+.projectile
+*.pyc
 
 # MCP specific
 .mcp-cache/
 .mcp-server/
+.mcp/
 
 # Project specific
 config.json
 .telemetry
+.ruff_cache/
+.mypy_cache/
 
 # Temporary files
 *.tmp
 *~
+.*.swp
+.*.swo

@@ -1,21 +1,19 @@
 """Basic tests for Lilith-Shell functionality."""
-import pytest
-import asyncio
-from unittest.mock import AsyncMock, patch, MagicMock
 import os
 import sys
 import subprocess
+import pytest
+from unittest.mock import patch, MagicMock
+from lilith_shell.executor import handle_call_tool
 
 # Add necessary path for imports
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from lilith_shell.executor import handle_call_tool
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 @pytest.fixture
 def mock_subprocess():
     """Mock subprocess.run to avoid executing actual commands."""
-    with patch('subprocess.run') as mock_run:
+    with patch("subprocess.run") as mock_run:
         # Setup mock return value
         mock_process = MagicMock()
         mock_process.stdout = "test output"
@@ -29,13 +27,12 @@ def mock_subprocess():
 async def test_execute_simple_command(mock_subprocess):
     """Test basic command execution functionality."""
     # Arrange - mock_subprocess fixture takes care of it
-    
+
     # Act
-    result = await handle_call_tool("execute_command", {
-        "command": "echo test",
-        "directory": "~"
-    })
-    
+    result = await handle_call_tool(
+        "execute_command", {"command": "echo test", "directory": "~"}
+    )
+
     # Assert
     assert len(result) == 1
     assert "test output" in result[0].text
@@ -44,7 +41,7 @@ async def test_execute_simple_command(mock_subprocess):
     mock_subprocess.assert_called_once()
     args, kwargs = mock_subprocess.call_args
     assert kwargs["shell"] is True
-    assert kwargs["command"] == "echo test"
+    assert kwargs["args"] == "echo test"  # Changed from 'command' to 'args'
     assert os.path.expanduser("~") in kwargs["cwd"]
 
 
@@ -54,13 +51,12 @@ async def test_command_with_error(mock_subprocess):
     # Arrange
     mock_subprocess.return_value.returncode = 1
     mock_subprocess.return_value.stderr = "error message"
-    
+
     # Act
-    result = await handle_call_tool("execute_command", {
-        "command": "invalid_command",
-        "directory": "~"
-    })
-    
+    result = await handle_call_tool(
+        "execute_command", {"command": "invalid_command", "directory": "~"}
+    )
+
     # Assert
     assert len(result) == 1
     assert "error message" in result[0].text
@@ -87,14 +83,15 @@ async def test_handle_missing_arguments():
 async def test_command_timeout(mock_subprocess):
     """Test command timeout handling."""
     # Arrange - set up subprocess.TimeoutExpired exception
-    mock_subprocess.side_effect = subprocess.TimeoutExpired(cmd="sleep 999", timeout=300)
-    
+    mock_subprocess.side_effect = subprocess.TimeoutExpired(
+        cmd="sleep 999", timeout=300
+    )
+
     # Act
-    result = await handle_call_tool("execute_command", {
-        "command": "sleep 999",
-        "directory": "~"
-    })
-    
+    result = await handle_call_tool(
+        "execute_command", {"command": "sleep 999", "directory": "~"}
+    )
+
     # Assert
     assert len(result) == 1
     assert "timed out" in result[0].text.lower()

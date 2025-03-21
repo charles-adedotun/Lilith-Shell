@@ -49,10 +49,15 @@ async def handle_call_tool(
     command = arguments.get("command")
     directory = os.path.expanduser(arguments.get("directory", "~"))
 
+    # Ensure command is not None for type checking
+    if command is None:
+        return [types.TextContent(type="text", text="Error: Command is required")]
+
     try:
         # Run command and capture output
+        # Fixed the parameter passing to match subprocess.run's expected arguments
         result = subprocess.run(
-            command=command,
+            args=command,  # Using args parameter with string command
             shell=True,
             cwd=directory,
             capture_output=True,

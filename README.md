@@ -50,7 +50,7 @@ Lilith Shell is an enhanced MCP server that empowers AI assistants to execute te
 # Windows Installation
 
 1. Install Prerequisites:
-   
+
    **Option A** - Using winget (if available on your system):
    ```powershell
    winget install python git
@@ -226,10 +226,10 @@ If you encounter issues:
    ```bash
    # First, make sure you're in the Lilith-Shell directory:
    cd /path/to/cloned/Lilith-Shell
-   
+
    # For macOS:
    ./venv/bin/python src/lilith_shell/executor.py
-   
+
    # For Windows:
    .\venv\Scripts\python.exe src\lilith_shell\executor.py
 
