@@ -1,4 +1,5 @@
 # Lilith Shell
+[![smithery badge](https://smithery.ai/badge/@charles-adedotun/Lilith-Shell)](https://smithery.ai/server/@charles-adedotun/Lilith-Shell)
 
 ⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. **Only use in controlled environments like virtual machines (VMs) or development systems you can afford to rebuild.**
 
@@ -38,6 +39,14 @@ Lilith Shell is an enhanced MCP server that empowers AI assistants to execute te
     - Security validation
 
 ## Installation
+
+### Installing via Smithery
+
+To install Lilith Shell for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@charles-adedotun/Lilith-Shell):
+
+```bash
+npx -y @smithery/cli install @charles-adedotun/Lilith-Shell --client claude
+```
 
 ### Prerequisites
 
