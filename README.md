@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/charles-adedotun-lilith-shell-badge.png)](https://mseep.ai/app/charles-adedotun-lilith-shell)
+
 # Lilith Shell
 
 ⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. **Only use in controlled environments like virtual machines (VMs) or development systems you can afford to rebuild.**
