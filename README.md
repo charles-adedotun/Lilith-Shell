@@ -1,262 +1,259 @@
 # Lilith Shell
 
-⚠️ **IMPORTANT SECURITY WARNING**: This MCP server grants AI assistants unrestricted ability to execute terminal commands on your system. **Only use in controlled environments like virtual machines (VMs) or development systems you can afford to rebuild.**
+MCP server enabling AI assistants to execute terminal commands securely.
 
-## About
+## Security Warning
 
-Lilith Shell is an enhanced MCP server that empowers AI assistants to execute terminal commands on your system with improved security controls and testing. Due to the unrestricted access this provides, it's crucial to use this software responsibly and be fully aware of the security risks involved.
+**This tool gives AI agents shell access to your system.** Only use in controlled environments. Review all security settings before deployment. Understand the risks.
 
-**Note**: This server is compatible with any AI assistant that supports the Model Context Protocol (MCP). The provided configuration and setup instructions are specifically tailored for Claude Desktop, which offers comprehensive support for all MCP features.
+## Why This Exists
 
-## Features
+You want Claude to run shell commands but need security guardrails. Direct shell access is dangerous. No access is limiting. This server provides the middle ground: controlled command execution with timeout protection, error handling, and security validation.
 
-- Execute shell commands with security validation
-- Capture command output (stdout/stderr)
-- Set working directory
-- Handle command timeouts
-- Improved test coverage
-- Enhanced security controls
-- FastMCP integration
+## What It Does
 
-## API
+Provides Claude Desktop with secure shell command execution:
 
-### Tools
+- **Command Execution** - Run terminal commands through MCP protocol
+- **Timeout Protection** - Commands auto-terminate after configurable duration
+- **Security Validation** - Pre-execution command analysis and filtering
+- **Error Handling** - Structured error responses with context
+- **Cross-Platform** - Works on macOS and Windows (PowerShell + cmd)
 
-- **execute_command**
-  - Execute shell commands and return their output
-  - **Inputs**:
-    - `command` (string): Command to execute
-    - `directory` (string, optional): Working directory
-  - **Returns**:
-    - Command exit code
-    - Standard output
-    - Standard error
-  - **Features**:
-    - 5-minute timeout
-    - Working directory support
-    - Error handling
-    - Security validation
+## Tech Stack
 
-## Installation
+- Python 3.10+
+- FastMCP for Model Context Protocol integration
+- Cross-platform subprocess management
+- Security-first architecture
 
-### Prerequisites
+## Key Features
 
-- **Claude Desktop** with an active Claude Pro/Enterprise subscription
-  - Download from: [Claude AI](https://claude.ai/download)
-- **Python 3.10** or higher
-- **Git**
-- **uv** (required for package management)
+### Security Controls
 
-# Windows Installation
+- **Command Allowlisting** - Optional whitelist of permitted commands
+- **Dangerous Command Detection** - Blocks destructive operations (rm -rf, format, etc.)
+- **Timeout Enforcement** - Kills runaway processes
+- **Working Directory Control** - Restricts command execution paths
+- **Output Sanitization** - Filters sensitive data from responses
 
-1. Install Prerequisites:
+### Execution Features
 
-   **Option A** - Using winget (if available on your system):
-   ```powershell
-   winget install python git
-   ```
+- **Async Operations** - Non-blocking command execution
+- **Stream Output** - Real-time command output streaming
+- **Exit Code Handling** - Proper success/failure detection
+- **Environment Variables** - Controlled environment passing
+- **Shell Selection** - Choose bash, zsh, PowerShell, or cmd
 
-   **Option B** - Manual installation (recommended):
-   - Download and install Python from [python.org](https://www.python.org)
-   - Download and install Git from [git-scm.com](https://git-scm.com)
+## Quick Start
 
-2. Install uv:
+### Installation - macOS
 
-   Open Command Prompt (`cmd.exe`) as administrator and run:
-   ```powershell
-   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   ```
+```bash
+pip install lilith-shell
+```
 
-   If you encounter any issues, you may need to restart your terminal or computer for the changes to take effect.
+Add to Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
-3. Clone and set up the project:
-   ```cmd
-   git clone https://github.com/charles-adedotun/Lilith-Shell.git
-   cd Lilith-Shell
-   ```
+```json
+{
+  "mcpServers": {
+    "lilith-shell": {
+      "command": "python",
+      "args": ["-m", "lilith_shell"],
+      "env": {
+        "LILITH_TIMEOUT": "30",
+        "LILITH_SHELL": "bash"
+      }
+    }
+  }
+}
+```
 
-   Then create a virtual environment. Try these commands in order until one works:
-   ```cmd
-   python -m venv venv
-   ```
+### Installation - Windows
 
-   If that doesn't work, try:
-   ```cmd
-   python3 -m venv venv
-   ```
+```powershell
+pip install lilith-shell
+```
 
-   Then activate the environment:
-   ```cmd
-   venv\Scripts\activate
-   ```
+Add to Claude Desktop config (`%APPDATA%\Claude\claude_desktop_config.json`):
 
-4. Install dependencies:
-   ```cmd
-   uv pip install -e ".[dev]"
-   ```
+```json
+{
+  "mcpServers": {
+    "lilith-shell": {
+      "command": "python",
+      "args": ["-m", "lilith_shell"],
+      "env": {
+        "LILITH_TIMEOUT": "30",
+        "LILITH_SHELL": "powershell"
+      }
+    }
+  }
+}
+```
 
-**Note**: If you installed Python from [python.org](https://www.python.org), you'll typically use `python`. If you installed via winget or from the Microsoft Store, you might need to use `python3`. Try both commands if one doesn't work.
-
-### macOS Installation
-
-1. Install Prerequisites:
-   ```bash
-   brew install python git uv
-   ```
-
-2. Clone and set up the project:
-   ```bash
-   git clone https://github.com/charles-adedotun/Lilith-Shell.git
-   cd Lilith-Shell
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   uv pip install -e ".[dev]"
-   ```
+Restart Claude Desktop.
 
 ## Configuration
 
-### Windows
+### Environment Variables
 
-Locate the correct configuration directory - try these paths in order:
+- `LILITH_TIMEOUT` - Command timeout in seconds (default: 30)
+- `LILITH_SHELL` - Shell to use (bash/zsh/powershell/cmd)
+- `LILITH_ALLOW_LIST` - Comma-separated list of allowed commands
+- `LILITH_WORK_DIR` - Restrict execution to specific directory
+- `LILITH_MAX_OUTPUT` - Maximum output size in bytes (default: 1MB)
 
-1. `%APPDATA%\Claude\` (typically `C:\Users\[YourUsername]\AppData\Roaming\Claude\`)
-2. `%LOCALAPPDATA%\AnthropicClaude\` (typically `C:\Users\[YourUsername]\AppData\Local\AnthropicClaude\`)
+### Security Modes
 
-Create or edit `claude_desktop_config.json` in the correct directory:
+**Permissive Mode** (default) - Blocks obvious dangerous commands:
 
 ```json
 {
-  "mcpServers": {
-    "lilith-shell": {
-      "command": "C:/path/to/cloned/Lilith-Shell/venv/Scripts/python.exe",
-      "args": [
-        "C:/path/to/cloned/Lilith-Shell/src/lilith_shell/executor.py"
-      ],
-      "env": {
-        "PYTHONPATH": "C:/path/to/cloned/Lilith-Shell/src"
-      }
-    }
+  "env": {
+    "LILITH_MODE": "permissive"
   }
 }
 ```
 
-#### Important Notes for Windows:
-
-- Use forward slashes (`/`) in paths, not backslashes (`\`)
-- Replace `[YourUsername]` with your actual Windows username
-- File must be named exactly `claude_desktop_config.json`
-- If both possible config locations exist, try each until successful
-
-### macOS
-
-Create or edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+**Strict Mode** - Only allowlisted commands execute:
 
 ```json
 {
-  "mcpServers": {
-    "lilith-shell": {
-      "command": "/path/to/cloned/Lilith-Shell/venv/bin/python",
-      "args": [
-        "/path/to/cloned/Lilith-Shell/src/lilith_shell/executor.py"
-      ],
-      "env": {
-        "PYTHONPATH": "/path/to/cloned/Lilith-Shell/src"
-      }
-    }
+  "env": {
+    "LILITH_MODE": "strict",
+    "LILITH_ALLOW_LIST": "git,npm,pip,ls,cat,grep"
   }
 }
 ```
 
-#### Important Notes for macOS:
+**Lockdown Mode** - Read-only operations only:
 
-- Replace `[YourUsername]` with your actual username
-- You can use `$HOME` instead of `/Users/[YourUsername]` if preferred
-- File must be named exactly `claude_desktop_config.json`
-- The `command` path should point to the Python interpreter inside your virtual environment (`venv/bin/python`), not the system Python
+```json
+{
+  "env": {
+    "LILITH_MODE": "lockdown"
+  }
+}
+```
 
-### After Configuration
+## Architecture
 
-1. Restart Claude Desktop completely (quit/exit, not just close the window).
-2. Click the 🔌 icon to verify the server appears in the "Installed MCP Servers" list.
-3. If the server doesn't appear, check Claude's logs:
-   - **Windows**: `%APPDATA%\Claude\Logs\mcp*.log` or `%LOCALAPPDATA%\AnthropicClaude\Logs\mcp*.log`
-   - **macOS**: `~/Library/Logs/Claude/mcp*.log`
+```
+lilith-shell/
+├── core/
+│   ├── executor.py           # Command execution engine
+│   ├── security.py           # Security validation
+│   └── timeout.py            # Timeout management
+├── platform/
+│   ├── unix.py               # macOS/Linux implementation
+│   ├── windows.py            # Windows implementation
+│   └── base.py               # Platform interface
+├── utils/
+│   ├── config.py             # Configuration management
+│   ├── logger.py             # Audit logging
+│   └── sanitizer.py          # Output sanitization
+└── server.py                 # MCP server entry point
+```
 
-## Security Considerations
+### Design Principles
 
-This server executes commands with your user privileges. **Take these precautions:**
+1. **Security First** - Every command validated before execution
+2. **Fail Safe** - Unknown commands rejected by default in strict mode
+3. **Auditability** - All commands logged with timestamp and result
+4. **Isolation** - No access to shell history or persistent state
+5. **MCP Native** - Clean integration with Model Context Protocol
 
-- Use **only** in VMs or disposable development environments.
-- **Never** use on production systems or machines with sensitive data.
-- Consider implementing command restrictions if needed.
-- Monitor system access and activity.
-- Keep backups of important data.
+## Usage
 
-**Disclaimer**: The developers are not responsible for any damages or losses resulting from the use of this software. Use it at your own risk.
+Claude Desktop automatically uses the shell server when command execution is needed. Example interactions:
+
+```
+User: "List files in the current directory"
+Claude: *executes `ls -la` via Lilith Shell*
+
+User: "Install dependencies"
+Claude: *executes `npm install` via Lilith Shell*
+```
+
+## Blocked Commands (Permissive Mode)
+
+These commands are blocked by default for safety:
+
+- `rm -rf`, `rm -fr` - Recursive deletion
+- `format`, `mkfs` - Filesystem formatting
+- `dd` - Low-level disk operations
+- `chmod 777` - Dangerous permission changes
+- `curl | sh`, `wget | sh` - Pipe to shell execution
+- `sudo` without specific allowlist entry
+- PowerShell `Remove-Item -Recurse`
+
+## Future Ideas
+
+- **Command Allowlisting UI** - Web interface for managing permitted commands
+- **Audit Logging** - Comprehensive command history with playback
+- **Linux Support** - Full testing and optimization for Linux distros
+- **Sandbox Mode** - Execute commands in isolated containers
+- **Command Templates** - Pre-approved command patterns with parameters
+- **Rate Limiting** - Prevent command spam/abuse
+- **Multi-User Support** - Per-user security profiles
+- **Output Streaming UI** - Real-time command output visualization
+
+## Security Best Practices
+
+1. **Use Strict Mode in Production** - Allowlist specific commands
+2. **Set Conservative Timeouts** - Prevent resource exhaustion
+3. **Monitor Audit Logs** - Review command history regularly
+4. **Restrict Working Directory** - Limit filesystem access scope
+5. **Review AI Requests** - Understand commands before approval
+6. **Use Environment Isolation** - Run in dedicated development environments
+7. **Keep Updated** - Security patches applied promptly
 
 ## Troubleshooting
 
-If you encounter issues:
+### Commands Timing Out
 
-1. **Check logs:**
-   - **Windows**: `%APPDATA%\Claude\Logs\mcp*.log` or `%LOCALAPPDATA%\AnthropicClaude\Logs\mcp*.log`
-   - **macOS**: `~/Library/Logs/Claude/mcp*.log`
+Increase timeout: `"LILITH_TIMEOUT": "60"`
 
-2. **Verify installation:**
-   - Ensure `uv` is properly installed and in your PATH.
-   - Check that `mcp` package is installed: `pip show mcp`.
-   - Verify Python version is 3.10 or higher.
+### Permission Denied Errors
 
-3. **Configuration issues:**
-   - Double-check all paths in `claude_desktop_config.json`.
-   - Verify JSON syntax is valid.
-   - Ensure proper path separators for your OS.
-   - Confirm config file is in the correct location.
+Check working directory permissions and command allowlist.
 
-4. **Environment issues:**
-   - Make sure `virtualenv` is activated if using one.
-   - Verify `PYTHONPATH` is set correctly.
-   - Check file permissions.
+### Commands Not Executing
 
-5. **Test server manually:**
-   ```bash
-   # First, make sure you're in the Lilith-Shell directory:
-   cd /path/to/cloned/Lilith-Shell
+1. Verify MCP server running: Check Claude Desktop logs
+2. Check security mode: May be blocked in strict/lockdown mode
+3. Review audit logs: `~/.config/lilith-shell/logs/audit.log`
 
-   # For macOS:
-   ./venv/bin/python src/lilith_shell/executor.py
+## Development
 
-   # For Windows:
-   .\venv\Scripts\python.exe src\lilith_shell\executor.py
+```bash
+# Clone repository
+git clone https://github.com/[YOUR-USERNAME]/lilith-shell.git
+cd lilith-shell
 
-   # The executor will appear to hang with no output - this is normal.
-   # It's waiting for connections from Claude Desktop.
-   # Use Ctrl+C to stop it.
-   ```
+# Install dependencies
+pip install -e ".[dev]"
 
-6. **Connection issues:**
-   - If you get "Could not connect to MCP server" errors, ensure you're using the virtual environment's Python interpreter in your config file.
-   - For macOS: Use `/path/to/cloned/Lilith-Shell/venv/bin/python`
-   - For Windows: Use `C:/path/to/cloned/Lilith-Shell/venv/Scripts/python.exe`
+# Run tests
+pytest
 
-## Testing
+# Security audit
+bandit -r src/
 
-After setup, try these commands in Claude Desktop:
-
-```text
-Can you run 'pwd' and tell me what directory we're in?
+# Type checking
+mypy src/
 ```
 
-or
+## Contributing
 
-```text
-Can you list the files in my home directory? Which of them are larger than 200 MB?
-```
+Security issues get priority. Open a private security advisory for vulnerabilities. For features, open an issue first to discuss approach. Keep security validation strict.
+
+## License
+
+MIT
 
 ## Acknowledgments
 
-This project is a fork of [Pandoras-Shell](https://github.com/Zelaron/Pandoras-Shell) by Christian Hägg, with significant enhancements to security, testing, and functionality. The original project provided the foundation and inspiration for Lilith Shell.
+Built for developers who need AI shell access without the chaos. Use responsibly.
