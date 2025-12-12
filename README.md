@@ -1,5 +1,7 @@
 # Lilith Shell
 
+[![CI](https://github.com/charles-adedotun/Lilith-Shell/actions/workflows/ci.yml/badge.svg)](https://github.com/charles-adedotun/Lilith-Shell/actions/workflows/ci.yml)
+
 MCP server enabling AI assistants to execute terminal commands securely.
 
 ## Security Warning
@@ -230,7 +232,7 @@ Check working directory permissions and command allowlist.
 
 ```bash
 # Clone repository
-git clone https://github.com/[YOUR-USERNAME]/lilith-shell.git
+git clone https://github.com/charles-adedotun/Lilith-Shell.git
 cd lilith-shell
 
 # Install dependencies
