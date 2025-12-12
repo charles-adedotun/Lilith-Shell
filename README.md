@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/charles-adedotun-lilith-shell-badge.png)](https://mseep.ai/app/charles-adedotun-lilith-shell)
+
 # Lilith Shell
 
 [![CI](https://github.com/charles-adedotun/Lilith-Shell/actions/workflows/ci.yml/badge.svg)](https://github.com/charles-adedotun/Lilith-Shell/actions/workflows/ci.yml)
