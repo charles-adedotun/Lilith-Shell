@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/charles-adedotun-lilith-shell-badge.png)](https://mseep.ai/app/charles-adedotun-lilith-shell)
+
 # Lilith Shell
 
 Experimental MCP server that exposes local shell command execution to an AI assistant.
